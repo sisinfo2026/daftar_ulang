@@ -169,6 +169,7 @@
             height: 12px;
             border-radius: 50%;
             margin-right: 8px;
+            animation: pulse 2s infinite;
         }
 
         .status-online {
@@ -179,6 +180,17 @@
         .status-offline {
             background: #f44336;
             box-shadow: 0 0 0 3px rgba(244, 67, 54, 0.3);
+        }
+
+        .status-checking {
+            background: #ff9800;
+            box-shadow: 0 0 0 3px rgba(255, 152, 0, 0.3);
+        }
+
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
         }
 
         @media (max-width: 768px) {
@@ -207,7 +219,7 @@
             <h1>📋 Form Daftar Ulang Santri</h1>
             <p>Silakan lengkapi data di bawah ini dengan benar</p>
             <div style="margin-top: 15px; font-size: 0.9rem;">
-                <span class="status-indicator" id="connectionStatus"></span>
+                <span class="status-indicator status-checking" id="connectionStatus"></span>
                 <span id="connectionText">Memeriksa koneksi...</span>
             </div>
         </div>
@@ -215,7 +227,7 @@
         <div class="form-container">
             <div class="info-box">
                 <h3>⚠️ Informasi Penting</h3>
-                <p>Form ini terhubung langsung dengan Google Sheets. Data yang Anda masukkan akan tersimpan secara real-time di sistem.</p>
+                <p>Form ini terhubung langsung dengan Google Sheets. Pastikan status menunjukkan "Terhubung" sebelum mengirim data.</p>
             </div>
 
             <div class="success-message" id="successMessage">
@@ -265,42 +277,54 @@
                 <input type="tel" id="no_wa" name="no_wa" required placeholder="Contoh: 08123456789" pattern="[0-9]{10,13}">
             </div>
 
-            <button type="button" class="submit-btn" onclick="submitForm()">
+            <button type="button" class="submit-btn" onclick="submitForm()" id="submitButton">
                 📤 Kirim Data Daftar Ulang
             </button>
         </div>
     </div>
 
     <script>
-        // ⚠️ GANTI URL_WEB_APP_DISINI dengan URL yang didapat dari Google Apps Script
-        const GOOGLE_APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzNzE66l5HLoMVQ119g0M4AxXFEtZy_GnWehxhY_Q1ml0POZKxyl6JXFC17Gguz42-iYw/exec'; // Ganti dengan URL Web App Anda
+        // PASTIKAN URL SUDAH BENAR - GANTI DENGAN URL WEB APP ANDA
+        const GOOGLE_APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzNzE66l5HLoMVQ119g0M4AxXFEtZy_GnWehxhY_Q1ml0POZKxyl6JXFC17Gguz42-iYw/exec';
 
-        // Check connection status
+        // Check connection status dengan multiple methods
         async function checkConnection() {
             const statusIndicator = document.getElementById('connectionStatus');
             const statusText = document.getElementById('connectionText');
+            const submitButton = document.getElementById('submitButton');
             
-            if (GOOGLE_APPS_SCRIPT_URL === 'URL_WEB_APP_DISINI') {
-                statusIndicator.className = 'status-indicator status-offline';
-                statusText.textContent = 'Belum terhubung - Setup diperlukan';
-                return false;
-            }
+            // Set status checking
+            statusIndicator.className = 'status-indicator status-checking';
+            statusText.textContent = 'Memeriksa koneksi ke Google Sheets...';
             
             try {
+                console.log('Testing connection to:', GOOGLE_APPS_SCRIPT_URL);
+                
+                // Try GET request first
                 const response = await fetch(GOOGLE_APPS_SCRIPT_URL, {
-                    method: 'OPTIONS'
+                    method: 'GET',
+                    mode: 'cors'
                 });
                 
+                console.log('Response status:', response.status);
+                console.log('Response ok:', response.ok);
+                
                 if (response.ok) {
+                    const result = await response.text();
+                    console.log('Response text:', result);
+                    
                     statusIndicator.className = 'status-indicator status-online';
-                    statusText.textContent = 'Terhubung ke Google Sheets';
+                    statusText.textContent = 'Terhubung ke Google Sheets ✓';
+                    submitButton.disabled = false;
                     return true;
                 } else {
-                    throw new Error('Connection failed');
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
                 }
             } catch (error) {
+                console.error('Connection error:', error);
                 statusIndicator.className = 'status-indicator status-offline';
-                statusText.textContent = 'Tidak terhubung ke Google Sheets';
+                statusText.textContent = `Tidak terhubung: ${error.message}`;
+                submitButton.disabled = true;
                 return false;
             }
         }
@@ -324,20 +348,13 @@
         });
 
         async function submitForm() {
-            const submitBtn = document.querySelector('.submit-btn');
+            const submitBtn = document.getElementById('submitButton');
             const successMessage = document.getElementById('successMessage');
             const errorMessage = document.getElementById('errorMessage');
             
             // Hide previous messages
             successMessage.style.display = 'none';
             errorMessage.style.display = 'none';
-            
-            // Check if properly configured
-            if (GOOGLE_APPS_SCRIPT_URL === 'URL_WEB_APP_DISINI') {
-                errorMessage.textContent = '❌ Form belum dikonfigurasi. Hubungi administrator untuk setup Google Apps Script.';
-                errorMessage.style.display = 'block';
-                return;
-            }
             
             // Validate form
             const form = {
@@ -378,15 +395,25 @@
             submitBtn.innerHTML = '⏳ Mengirim ke Google Sheets...';
             
             try {
+                console.log('Submitting form data:', form);
+                
                 const response = await fetch(GOOGLE_APPS_SCRIPT_URL, {
                     method: 'POST',
+                    mode: 'cors',
                     headers: {
                         'Content-Type': 'application/json',
                     },
                     body: JSON.stringify(form)
                 });
                 
+                console.log('Submit response status:', response.status);
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+                
                 const result = await response.json();
+                console.log('Submit result:', result);
                 
                 if (result.success) {
                     // Show success message
@@ -406,7 +433,7 @@
                 }
                 
             } catch (error) {
-                console.error('Error:', error);
+                console.error('Submit error:', error);
                 errorMessage.textContent = `❌ ${error.message || 'Terjadi kesalahan saat mengirim data. Silakan coba lagi.'}`;
                 errorMessage.style.display = 'block';
                 errorMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
@@ -425,8 +452,14 @@
             }
         });
 
-        // Check connection on page load
-        window.addEventListener('load', checkConnection);
+        // Check connection on page load and retry every 30 seconds if failed
+        window.addEventListener('load', async function() {
+            const connected = await checkConnection();
+            if (!connected) {
+                // Retry after 30 seconds
+                setTimeout(checkConnection, 30000);
+            }
+        });
     </script>
 </body>
 </html>
