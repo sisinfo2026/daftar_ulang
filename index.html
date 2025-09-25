@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form Daftar Ulang Santri</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2rem;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .header p {
+            opacity: 0.9;
+            font-size: 1.1rem;
+        }
+
+        .form-container {
+            padding: 40px;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #333;
+            font-size: 1rem;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e1e1e1;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: #f9f9f9;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #4CAF50;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.1);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(76, 175, 80, 0.3);
+        }
+
+        .submit-btn:active {
+            transform: translateY(0);
+        }
+
+        .submit-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .success-message {
+            background: #d4edda;
+            color: #155724;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border: 1px solid #c3e6cb;
+            display: none;
+        }
+
+        .error-message {
+            background: #f8d7da;
+            color: #721c24;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border: 1px solid #f5c6cb;
+            display: none;
+        }
+
+        .required {
+            color: #e74c3c;
+        }
+
+        .info-box {
+            background: #e3f2fd;
+            border: 1px solid #bbdefb;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 25px;
+        }
+
+        .info-box h3 {
+            color: #1976d2;
+            margin-bottom: 10px;
+        }
+
+        .info-box p {
+            color: #424242;
+            line-height: 1.5;
+        }
+
+        @media (max-width: 768px) {
+            .form-row {
+                grid-template-columns: 1fr;
+                gap: 0;
+            }
+            
+            .form-container {
+                padding: 20px;
+            }
+            
+            .header {
+                padding: 20px;
+            }
+            
+            .header h1 {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📋 Form Daftar Ulang Santri</h1>
+            <p>Silakan lengkapi data di bawah ini dengan benar</p>
+        </div>
+        
+        <div class="form-container">
+            <div class="info-box">
+                <h3>⚠️ Informasi Penting</h3>
+                <p>Pastikan semua data yang diisi sudah benar. Form ini akan mengirim data ke sistem informasi untuk proses daftar ulang Anda.</p>
+            </div>
+
+            <div class="success-message" id="successMessage">
+                ✅ Data berhasil dikirim! Terima kasih telah melakukan daftar ulang.
+            </div>
+            
+            <div class="error-message" id="errorMessage">
+                ❌ Terjadi kesalahan saat mengirim data. Silakan coba lagi.
+            </div>
+
+            <div class="form-group">
+                <label for="id_santri">ID Santri <span class="required">*</span></label>
+                <input type="text" id="id_santri" name="id_santri" required placeholder="Masukkan ID Santri">
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="bop">Biaya Operasional (BOP) <span class="required">*</span></label>
+                    <input type="number" id="bop" name="bop" required placeholder="Masukkan jumlah BOP" min="0">
+                </div>
+                
+                <div class="form-group">
+                    <label for="sarpras">Sarana Prasarana <span class="required">*</span></label>
+                    <input type="number" id="sarpras" name="sarpras" required placeholder="Masukkan biaya Sarpras" min="0">
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="kegiatan">Kegiatan <span class="required">*</span></label>
+                    <input type="number" id="kegiatan" name="kegiatan" required placeholder="Masukkan biaya kegiatan" min="0">
+                </div>
+                
+                <div class="form-group">
+                    <label for="perlengkapan">Perlengkapan <span class="required">*</span></label>
+                    <input type="number" id="perlengkapan" name="perlengkapan" required placeholder="Masukkan biaya perlengkapan" min="0">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="alamat">Alamat <span class="required">*</span></label>
+                <textarea id="alamat" name="alamat" required placeholder="Masukkan alamat lengkap"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="no_wa">Nomor WhatsApp <span class="required">*</span></label>
+                <input type="tel" id="no_wa" name="no_wa" required placeholder="Contoh: 08123456789" pattern="[0-9]{10,13}">
+            </div>
+
+            <button type="button" class="submit-btn" onclick="submitForm()">
+                📤 Kirim Data Daftar Ulang
+            </button>
+        </div>
+    </div>
+
+    <script>
+        function formatCurrency(input) {
+            let value = input.value.replace(/[^\d]/g, '');
+            if (value) {
+                input.value = parseInt(value).toLocaleString('id-ID');
+            }
+        }
+
+        function validateWhatsApp(input) {
+            let value = input.value.replace(/[^\d]/g, '');
+            if (value.length > 0 && !value.startsWith('08') && !value.startsWith('62')) {
+                if (!value.startsWith('8')) {
+                    value = '08' + value;
+                }
+            }
+            input.value = value;
+        }
+
+        document.getElementById('no_wa').addEventListener('input', function() {
+            validateWhatsApp(this);
+        });
+
+        async function submitForm() {
+            const submitBtn = document.querySelector('.submit-btn');
+            const successMessage = document.getElementById('successMessage');
+            const errorMessage = document.getElementById('errorMessage');
+            
+            // Hide previous messages
+            successMessage.style.display = 'none';
+            errorMessage.style.display = 'none';
+            
+            // Validate form
+            const form = {
+                id_santri: document.getElementById('id_santri').value.trim(),
+                bop: document.getElementById('bop').value,
+                sarpras: document.getElementById('sarpras').value,
+                kegiatan: document.getElementById('kegiatan').value,
+                perlengkapan: document.getElementById('perlengkapan').value,
+                alamat: document.getElementById('alamat').value.trim(),
+                no_wa: document.getElementById('no_wa').value.trim()
+            };
+            
+            // Check required fields
+            if (!form.id_santri || !form.bop || !form.sarpras || !form.kegiatan || 
+                !form.perlengkapan || !form.alamat || !form.no_wa) {
+                errorMessage.textContent = '❌ Mohon lengkapi semua field yang wajib diisi.';
+                errorMessage.style.display = 'block';
+                return;
+            }
+            
+            // Validate WhatsApp number
+            if (!/^(08|62)\d{8,11}$/.test(form.no_wa)) {
+                errorMessage.textContent = '❌ Format nomor WhatsApp tidak valid. Gunakan format 08xxx atau 62xxx.';
+                errorMessage.style.display = 'block';
+                return;
+            }
+            
+            // Disable button and show loading
+            submitBtn.disabled = true;
+            submitBtn.textContent = '⏳ Mengirim data...';
+            
+            try {
+                // Simulate API call to Google Sheets
+                // In real implementation, you would use Google Apps Script Web App or Google Sheets API
+                await new Promise(resolve => setTimeout(resolve, 2000)); // Simulate network delay
+                
+                // Show success message
+                successMessage.style.display = 'block';
+                
+                // Clear form
+                document.querySelectorAll('input, textarea').forEach(input => {
+                    input.value = '';
+                });
+                
+                // Scroll to success message
+                successMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                
+            } catch (error) {
+                console.error('Error:', error);
+                errorMessage.textContent = '❌ Terjadi kesalahan saat mengirim data. Silakan coba lagi atau hubungi administrator.';
+                errorMessage.style.display = 'block';
+            } finally {
+                // Re-enable button
+                submitBtn.disabled = false;
+                submitBtn.textContent = '📤 Kirim Data Daftar Ulang';
+            }
+        }
+        
+        // Add enter key support
+        document.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter' && !e.target.matches('textarea')) {
+                e.preventDefault();
+                submitForm();
+            }
+        });
+    </script>
+</body>
+</html>
