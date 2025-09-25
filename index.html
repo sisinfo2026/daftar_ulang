@@ -163,6 +163,24 @@
             line-height: 1.5;
         }
 
+        .status-indicator {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 8px;
+        }
+
+        .status-online {
+            background: #4CAF50;
+            box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.3);
+        }
+
+        .status-offline {
+            background: #f44336;
+            box-shadow: 0 0 0 3px rgba(244, 67, 54, 0.3);
+        }
+
         @media (max-width: 768px) {
             .form-row {
                 grid-template-columns: 1fr;
@@ -188,25 +206,29 @@
         <div class="header">
             <h1>📋 Form Daftar Ulang Santri</h1>
             <p>Silakan lengkapi data di bawah ini dengan benar</p>
+            <div style="margin-top: 15px; font-size: 0.9rem;">
+                <span class="status-indicator" id="connectionStatus"></span>
+                <span id="connectionText">Memeriksa koneksi...</span>
+            </div>
         </div>
         
         <div class="form-container">
             <div class="info-box">
                 <h3>⚠️ Informasi Penting</h3>
-                <p>Pastikan semua data yang diisi sudah benar. Form ini akan mengirim data ke sistem informasi untuk proses daftar ulang Anda.</p>
+                <p>Form ini terhubung langsung dengan Google Sheets. Data yang Anda masukkan akan tersimpan secara real-time di sistem.</p>
             </div>
 
             <div class="success-message" id="successMessage">
-                ✅ Data berhasil dikirim! Terima kasih telah melakukan daftar ulang.
+                ✅ Data berhasil disimpan ke Google Sheets! Terima kasih telah melakukan daftar ulang.
             </div>
             
             <div class="error-message" id="errorMessage">
-                ❌ Terjadi kesalahan saat mengirim data. Silakan coba lagi.
+                ❌ Terjadi kesalahan saat menyimpan data.
             </div>
 
             <div class="form-group">
                 <label for="id_santri">ID Santri <span class="required">*</span></label>
-                <input type="text" id="id_santri" name="id_santri" required placeholder="Masukkan ID Santri">
+                <input type="text" id="id_santri" name="id_santri" required placeholder="Masukkan ID Santri" style="text-transform: uppercase;">
             </div>
 
             <div class="form-row">
@@ -250,10 +272,36 @@
     </div>
 
     <script>
-        function formatCurrency(input) {
-            let value = input.value.replace(/[^\d]/g, '');
-            if (value) {
-                input.value = parseInt(value).toLocaleString('id-ID');
+        // ⚠️ GANTI URL_WEB_APP_DISINI dengan URL yang didapat dari Google Apps Script
+        const GOOGLE_APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzNzE66l5HLoMVQ119g0M4AxXFEtZy_GnWehxhY_Q1ml0POZKxyl6JXFC17Gguz42-iYw/exec'; // Ganti dengan URL Web App Anda
+
+        // Check connection status
+        async function checkConnection() {
+            const statusIndicator = document.getElementById('connectionStatus');
+            const statusText = document.getElementById('connectionText');
+            
+            if (GOOGLE_APPS_SCRIPT_URL === 'URL_WEB_APP_DISINI') {
+                statusIndicator.className = 'status-indicator status-offline';
+                statusText.textContent = 'Belum terhubung - Setup diperlukan';
+                return false;
+            }
+            
+            try {
+                const response = await fetch(GOOGLE_APPS_SCRIPT_URL, {
+                    method: 'OPTIONS'
+                });
+                
+                if (response.ok) {
+                    statusIndicator.className = 'status-indicator status-online';
+                    statusText.textContent = 'Terhubung ke Google Sheets';
+                    return true;
+                } else {
+                    throw new Error('Connection failed');
+                }
+            } catch (error) {
+                statusIndicator.className = 'status-indicator status-offline';
+                statusText.textContent = 'Tidak terhubung ke Google Sheets';
+                return false;
             }
         }
 
@@ -271,6 +319,10 @@
             validateWhatsApp(this);
         });
 
+        document.getElementById('id_santri').addEventListener('input', function() {
+            this.value = this.value.toUpperCase();
+        });
+
         async function submitForm() {
             const submitBtn = document.querySelector('.submit-btn');
             const successMessage = document.getElementById('successMessage');
@@ -279,6 +331,13 @@
             // Hide previous messages
             successMessage.style.display = 'none';
             errorMessage.style.display = 'none';
+            
+            // Check if properly configured
+            if (GOOGLE_APPS_SCRIPT_URL === 'URL_WEB_APP_DISINI') {
+                errorMessage.textContent = '❌ Form belum dikonfigurasi. Hubungi administrator untuk setup Google Apps Script.';
+                errorMessage.style.display = 'block';
+                return;
+            }
             
             // Validate form
             const form = {
@@ -306,34 +365,55 @@
                 return;
             }
             
+            // Validate numbers
+            if (parseInt(form.bop) <= 0 || parseInt(form.sarpras) <= 0 || 
+                parseInt(form.kegiatan) <= 0 || parseInt(form.perlengkapan) <= 0) {
+                errorMessage.textContent = '❌ Semua biaya harus lebih dari 0.';
+                errorMessage.style.display = 'block';
+                return;
+            }
+            
             // Disable button and show loading
             submitBtn.disabled = true;
-            submitBtn.textContent = '⏳ Mengirim data...';
+            submitBtn.innerHTML = '⏳ Mengirim ke Google Sheets...';
             
             try {
-                // Simulate API call to Google Sheets
-                // In real implementation, you would use Google Apps Script Web App or Google Sheets API
-                await new Promise(resolve => setTimeout(resolve, 2000)); // Simulate network delay
-                
-                // Show success message
-                successMessage.style.display = 'block';
-                
-                // Clear form
-                document.querySelectorAll('input, textarea').forEach(input => {
-                    input.value = '';
+                const response = await fetch(GOOGLE_APPS_SCRIPT_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(form)
                 });
                 
-                // Scroll to success message
-                successMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                const result = await response.json();
+                
+                if (result.success) {
+                    // Show success message
+                    successMessage.innerHTML = `✅ ${result.message}<br><small>ID: ${form.id_santri} • ${new Date().toLocaleString('id-ID')}</small>`;
+                    successMessage.style.display = 'block';
+                    
+                    // Clear form
+                    document.querySelectorAll('input, textarea').forEach(input => {
+                        input.value = '';
+                    });
+                    
+                    // Scroll to success message
+                    successMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    
+                } else {
+                    throw new Error(result.message || 'Terjadi kesalahan');
+                }
                 
             } catch (error) {
                 console.error('Error:', error);
-                errorMessage.textContent = '❌ Terjadi kesalahan saat mengirim data. Silakan coba lagi atau hubungi administrator.';
+                errorMessage.textContent = `❌ ${error.message || 'Terjadi kesalahan saat mengirim data. Silakan coba lagi.'}`;
                 errorMessage.style.display = 'block';
+                errorMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
             } finally {
                 // Re-enable button
                 submitBtn.disabled = false;
-                submitBtn.textContent = '📤 Kirim Data Daftar Ulang';
+                submitBtn.innerHTML = '📤 Kirim Data Daftar Ulang';
             }
         }
         
@@ -344,6 +424,9 @@
                 submitForm();
             }
         });
+
+        // Check connection on page load
+        window.addEventListener('load', checkConnection);
     </script>
 </body>
 </html>
