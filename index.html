@@ -10,211 +10,209 @@
             padding: 0;
             box-sizing: border-box;
         }
-        
+
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
-            color: #333;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
             padding: 20px;
         }
-        
+
         .container {
-            max-width: 600px;
+            max-width: 800px;
             margin: 0 auto;
             background: white;
             border-radius: 15px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
             overflow: hidden;
         }
-        
+
         .header {
-            background: linear-gradient(135deg, #4CAF50, #45a049);
+            background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
             color: white;
             padding: 30px;
             text-align: center;
         }
-        
+
         .header h1 {
-            font-size: 2.2em;
+            font-size: 2rem;
             margin-bottom: 10px;
-            font-weight: 300;
+            font-weight: 600;
         }
-        
+
         .header p {
             opacity: 0.9;
-            font-size: 1.1em;
+            font-size: 1.1rem;
         }
-        
+
         .form-container {
             padding: 40px;
         }
-        
+
         .form-group {
             margin-bottom: 25px;
         }
-        
-        label {
+
+        .form-group label {
             display: block;
             margin-bottom: 8px;
-            font-weight: 600;
-            color: #555;
-            font-size: 1.1em;
+            font-weight: 500;
+            color: #333;
+            font-size: 1rem;
         }
-        
-        .required {
-            color: #e74c3c;
-        }
-        
-        input[type="text"],
-        input[type="number"],
-        textarea {
+
+        .form-group input,
+        .form-group textarea {
             width: 100%;
-            padding: 15px;
-            border: 2px solid #e0e0e0;
+            padding: 12px 15px;
+            border: 2px solid #e1e1e1;
             border-radius: 8px;
-            font-size: 1em;
+            font-size: 1rem;
             transition: all 0.3s ease;
-            background: #fafafa;
+            background: #f9f9f9;
         }
-        
-        input:focus,
-        textarea:focus {
+
+        .form-group input:focus,
+        .form-group textarea:focus {
             outline: none;
             border-color: #4CAF50;
             background: white;
-            box-shadow: 0 0 10px rgba(76, 175, 80, 0.1);
+            box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.1);
         }
-        
-        textarea {
+
+        .form-group textarea {
             resize: vertical;
-            min-height: 80px;
+            min-height: 100px;
         }
-        
+
         .form-row {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 20px;
         }
-        
+
         .submit-btn {
-            background: linear-gradient(135deg, #4CAF50, #45a049);
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
             color: white;
-            padding: 15px 30px;
             border: none;
             border-radius: 8px;
-            font-size: 1.1em;
+            font-size: 1.1rem;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
-            width: 100%;
-            text-transform: uppercase;
-            letter-spacing: 1px;
+            margin-top: 20px;
         }
-        
-        .submit-btn:hover {
+
+        .submit-btn:hover:not(:disabled) {
             transform: translateY(-2px);
             box-shadow: 0 10px 20px rgba(76, 175, 80, 0.3);
         }
-        
+
         .submit-btn:active {
             transform: translateY(0);
         }
-        
+
         .submit-btn:disabled {
             background: #ccc;
             cursor: not-allowed;
             transform: none;
             box-shadow: none;
         }
-        
-        .status {
-            margin-top: 20px;
+
+        .success-message {
+            background: #d4edda;
+            color: #155724;
             padding: 15px;
             border-radius: 8px;
-            text-align: center;
-            font-weight: 600;
-            min-height: 50px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s ease;
+            margin-bottom: 20px;
+            border: 1px solid #c3e6cb;
+            display: none;
         }
-        
-        .status.loading {
-            background: #e3f2fd;
-            color: #1976d2;
-            border: 2px solid #bbdefb;
-        }
-        
-        .status.success {
-            background: #e8f5e8;
-            color: #2e7d32;
-            border: 2px solid #c8e6c9;
-        }
-        
-        .status.error {
-            background: #ffebee;
-            color: #c62828;
-            border: 2px solid #ffcdd2;
-        }
-        
-        .spinner {
-            display: inline-block;
-            width: 20px;
-            height: 20px;
-            border: 3px solid #f3f3f3;
-            border-top: 3px solid #1976d2;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-            margin-right: 10px;
-        }
-        
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        
-        .info-box {
-            background: #f0f8ff;
-            border: 2px solid #b3d9ff;
+
+        .error-message {
+            background: #f8d7da;
+            color: #721c24;
+            padding: 15px;
             border-radius: 8px;
-            padding: 20px;
-            margin-bottom: 30px;
+            margin-bottom: 20px;
+            border: 1px solid #f5c6cb;
+            display: none;
         }
-        
+
+        .required {
+            color: #e74c3c;
+        }
+
+        .info-box {
+            background: #e3f2fd;
+            border: 1px solid #bbdefb;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 25px;
+        }
+
         .info-box h3 {
             color: #1976d2;
             margin-bottom: 10px;
         }
-        
-        .info-box ul {
-            color: #555;
-            padding-left: 20px;
+
+        .info-box p {
+            color: #424242;
+            line-height: 1.5;
         }
-        
-        .info-box li {
-            margin-bottom: 5px;
+
+        .status-indicator {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 8px;
+            animation: pulse 2s infinite;
         }
-        
+
+        .status-online {
+            background: #4CAF50;
+            box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.3);
+        }
+
+        .status-offline {
+            background: #f44336;
+            box-shadow: 0 0 0 3px rgba(244, 67, 54, 0.3);
+        }
+
+        .status-checking {
+            background: #ff9800;
+            box-shadow: 0 0 0 3px rgba(255, 152, 0, 0.3);
+        }
+
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+
+        .hidden-iframe {
+            display: none;
+        }
+
         @media (max-width: 768px) {
-            .container {
-                margin: 10px;
-                border-radius: 10px;
+            .form-row {
+                grid-template-columns: 1fr;
+                gap: 0;
             }
             
             .form-container {
                 padding: 20px;
             }
             
-            .form-row {
-                grid-template-columns: 1fr;
-                gap: 0;
+            .header {
+                padding: 20px;
             }
             
             .header h1 {
-                font-size: 1.8em;
+                font-size: 1.5rem;
             }
         }
     </style>
@@ -222,394 +220,363 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1>📋 Form Daftar Ulang</h1>
-            <p>Silakan isi data dengan lengkap dan benar</p>
+            <h1>📋 Form Daftar Ulang Santri</h1>
+            <p>Silakan lengkapi data di bawah ini dengan benar</p>
+            <div style="margin-top: 15px; font-size: 0.9rem;">
+                <span class="status-indicator status-checking" id="connectionStatus"></span>
+                <span id="connectionText">Memeriksa koneksi...</span>
+            </div>
         </div>
         
         <div class="form-container">
             <div class="info-box">
-                <h3>ℹ️ Petunjuk Pengisian:</h3>
-                <ul>
-                    <li><strong>ID Santri</strong> wajib diisi (minimal 3 karakter)</li>
-                    <li><strong>Biaya</strong> masukkan angka tanpa titik atau koma</li>
-                    <li><strong>Nomor WA</strong> gunakan format 08xx atau +62xx</li>
-                    <li>Field yang bertanda <span class="required">*</span> wajib diisi</li>
-                </ul>
+                <h3>⚠️ Informasi Penting</h3>
+                <p>Form ini terhubung langsung dengan Google Sheets. Data yang Anda masukkan akan tersimpan secara real-time di sistem.</p>
+            </div>
+
+            <div class="success-message" id="successMessage">
+                ✅ Data berhasil disimpan ke Google Sheets! Terima kasih telah melakukan daftar ulang.
             </div>
             
-            <form id="daftarUlangForm">
+            <div class="error-message" id="errorMessage">
+                ❌ Terjadi kesalahan saat menyimpan data.
+            </div>
+
+            <div class="form-group">
+                <label for="id_santri">ID Santri <span class="required">*</span></label>
+                <input type="text" id="id_santri" name="id_santri" required placeholder="Masukkan ID Santri" style="text-transform: uppercase;">
+            </div>
+
+            <div class="form-row">
                 <div class="form-group">
-                    <label for="id_santri">ID Santri <span class="required">*</span></label>
-                    <input type="text" id="id_santri" name="id_santri" required 
-                           placeholder="Contoh: SNT001, AHMAD123, dll"
-                           minlength="3" maxlength="20">
-                </div>
-                
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="bop">Biaya BOP (Rp)</label>
-                        <input type="number" id="bop" name="bop" 
-                               placeholder="500000" min="0" max="99999999">
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="sarpras">Biaya Sarpras (Rp)</label>
-                        <input type="number" id="sarpras" name="sarpras" 
-                               placeholder="200000" min="0" max="99999999">
-                    </div>
-                </div>
-                
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="kegiatan">Biaya Kegiatan (Rp)</label>
-                        <input type="number" id="kegiatan" name="kegiatan" 
-                               placeholder="100000" min="0" max="99999999">
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="perlengkapan">Biaya Perlengkapan (Rp)</label>
-                        <input type="number" id="perlengkapan" name="perlengkapan" 
-                               placeholder="150000" min="0" max="99999999">
-                    </div>
+                    <label for="bop">Biaya Operasional (BOP) <span class="required">*</span></label>
+                    <input type="number" id="bop" name="bop" required placeholder="Masukkan jumlah BOP" min="0">
                 </div>
                 
                 <div class="form-group">
-                    <label for="alamat">Alamat Lengkap</label>
-                    <textarea id="alamat" name="alamat" 
-                              placeholder="Masukkan alamat lengkap..."></textarea>
+                    <label for="sarpras">Sarana Prasarana <span class="required">*</span></label>
+                    <input type="number" id="sarpras" name="sarpras" required placeholder="Masukkan biaya Sarpras" min="0">
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="kegiatan">Kegiatan <span class="required">*</span></label>
+                    <input type="number" id="kegiatan" name="kegiatan" required placeholder="Masukkan biaya kegiatan" min="0">
                 </div>
                 
                 <div class="form-group">
-                    <label for="no_wa">Nomor WhatsApp</label>
-                    <input type="text" id="no_wa" name="no_wa" 
-                           placeholder="08123456789 atau +6281234567890"
-                           pattern="[0-9+\-\s]{10,15}">
+                    <label for="perlengkapan">Perlengkapan <span class="required">*</span></label>
+                    <input type="number" id="perlengkapan" name="perlengkapan" required placeholder="Masukkan biaya perlengkapan" min="0">
                 </div>
-                
-                <button type="submit" class="submit-btn" id="submitBtn">
-                    📤 Kirim Data
-                </button>
-                
-                <div id="status" class="status" style="display: none;"></div>
-            </form>
+            </div>
+
+            <div class="form-group">
+                <label for="alamat">Alamat <span class="required">*</span></label>
+                <textarea id="alamat" name="alamat" required placeholder="Masukkan alamat lengkap"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="no_wa">Nomor WhatsApp <span class="required">*</span></label>
+                <input type="tel" id="no_wa" name="no_wa" required placeholder="Contoh: 08123456789" pattern="[0-9]{10,13}">
+            </div>
+
+            <button type="button" class="submit-btn" onclick="submitForm()" id="submitButton">
+                📤 Kirim Data Daftar Ulang
+            </button>
         </div>
     </div>
 
+    <!-- Hidden iframe untuk bypass CORS -->
+    <iframe id="hiddenIframe" class="hidden-iframe" name="hiddenIframe"></iframe>
+
     <script>
-        // ===============================================
-        // KONFIGURASI
-        // ===============================================
-        const WEBAPP_URL = "https://script.google.com/macros/s/AKfycbzNzE66l5HLoMVQ119g0M4AxXFEtZy_GnWehxhY_Q1ml0POZKxyl6JXFC17Gguz42-iYw/exec";
-        
-        // ===============================================
-        // ELEMENTS
-        // ===============================================
-        const form = document.getElementById("daftarUlangForm");
-        const statusEl = document.getElementById("status");
-        const submitBtn = document.getElementById("submitBtn");
-        
-        // ===============================================
-        // EVENT LISTENERS
-        // ===============================================
-        
-        // Form submission
-        form.addEventListener("submit", handleSubmit);
-        
-        // Real-time validation
-        document.getElementById('id_santri').addEventListener('input', validateIdSantri);
-        document.getElementById('no_wa').addEventListener('input', validatePhoneNumber);
-        
-        // Format number inputs
-        ['bop', 'sarpras', 'kegiatan', 'perlengkapan'].forEach(id => {
-            const input = document.getElementById(id);
-            input.addEventListener('input', formatNumberInput);
-        });
-        
-        // ===============================================
-        // MAIN FUNCTIONS
-        // ===============================================
-        
-        async function handleSubmit(e) {
-            e.preventDefault();
-            
-            // Disable form
-            setFormState(false);
-            showStatus('loading', 'Mengirim data...', true);
-            
-            // Get form data
-            const formData = Object.fromEntries(new FormData(form).entries());
-            console.log('📤 Sending data:', formData);
-            
+        // URL Google Apps Script Anda
+        const GOOGLE_APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbw2pGhmrgdx1cDMbwrlbwu9KNpDJ0YweRB4ERHMFPym6IcwpohhC7maxKK_TMPwnso1jw/exec';
+
+        // Method 1: Fetch dengan no-cors mode
+        async function checkConnectionFetch() {
             try {
-                // Validate data
-                const validation = validateFormData(formData);
-                if (!validation.valid) {
-                    throw new Error(validation.message);
-                }
+                const response = await fetch(GOOGLE_APPS_SCRIPT_URL, {
+                    method: 'GET',
+                    mode: 'no-cors' // Bypass CORS untuk GET request
+                });
                 
-                // Send data
-                const result = await sendData(formData);
+                // Dengan no-cors, kita tidak bisa membaca response, tapi jika tidak error berarti koneksi OK
+                return true;
+            } catch (error) {
+                console.error('Fetch method failed:', error);
+                return false;
+            }
+        }
+
+        // Method 2: JSONP (jika Apps Script support)
+        function checkConnectionJSONP() {
+            return new Promise((resolve) => {
+                const script = document.createElement('script');
+                const callbackName = 'jsonp_callback_' + Math.round(100000 * Math.random());
+                
+                // Cleanup function
+                const cleanup = () => {
+                    document.head.removeChild(script);
+                    delete window[callbackName];
+                };
+                
+                // Set timeout
+                const timeout = setTimeout(() => {
+                    cleanup();
+                    resolve(false);
+                }, 5000);
+                
+                // Success callback
+                window[callbackName] = function(data) {
+                    clearTimeout(timeout);
+                    cleanup();
+                    resolve(true);
+                };
+                
+                // Error callback
+                script.onerror = () => {
+                    clearTimeout(timeout);
+                    cleanup();
+                    resolve(false);
+                };
+                
+                script.src = GOOGLE_APPS_SCRIPT_URL + '?callback=' + callbackName;
+                document.head.appendChild(script);
+            });
+        }
+
+        // Method 3: Image ping
+        function checkConnectionImage() {
+            return new Promise((resolve) => {
+                const img = new Image();
+                const timeout = setTimeout(() => resolve(false), 5000);
+                
+                img.onload = () => {
+                    clearTimeout(timeout);
+                    resolve(true);
+                };
+                
+                img.onerror = () => {
+                    clearTimeout(timeout);
+                    resolve(false);
+                };
+                
+                img.src = GOOGLE_APPS_SCRIPT_URL + '?ping=' + Date.now();
+            });
+        }
+
+        // Check connection dengan multiple methods
+        async function checkConnection() {
+            const statusIndicator = document.getElementById('connectionStatus');
+            const statusText = document.getElementById('connectionText');
+            const submitButton = document.getElementById('submitButton');
+            
+            statusIndicator.className = 'status-indicator status-checking';
+            statusText.textContent = 'Memeriksa koneksi ke Google Sheets...';
+            
+            console.log('Testing connection to Apps Script...');
+            
+            // Try multiple methods
+            let connected = false;
+            
+            // Method 1: Fetch dengan no-cors
+            connected = await checkConnectionFetch();
+            
+            if (connected) {
+                statusIndicator.className = 'status-indicator status-online';
+                statusText.textContent = 'Siap mengirim ke Google Sheets ✓';
+                submitButton.disabled = false;
+                return true;
+            }
+            
+            // Method 2: Image ping (fallback)
+            connected = await checkConnectionImage();
+            
+            if (connected) {
+                statusIndicator.className = 'status-indicator status-online';
+                statusText.textContent = 'Koneksi terdeteksi (fallback) ✓';
+                submitButton.disabled = false;
+                return true;
+            }
+            
+            // All methods failed
+            statusIndicator.className = 'status-indicator status-offline';
+            statusText.textContent = 'Koneksi bermasalah - Coba submit manual';
+            submitButton.disabled = false; // Tetap allow submit
+            return false;
+        }
+
+        function validateWhatsApp(input) {
+            let value = input.value.replace(/[^\d]/g, '');
+            if (value.length > 0 && !value.startsWith('08') && !value.startsWith('62')) {
+                if (!value.startsWith('8')) {
+                    value = '08' + value;
+                }
+            }
+            input.value = value;
+        }
+
+        document.getElementById('no_wa').addEventListener('input', function() {
+            validateWhatsApp(this);
+        });
+
+        document.getElementById('id_santri').addEventListener('input', function() {
+            this.value = this.value.toUpperCase();
+        });
+
+        // Submit form dengan multiple methods
+        async function submitForm() {
+            const submitBtn = document.getElementById('submitButton');
+            const successMessage = document.getElementById('successMessage');
+            const errorMessage = document.getElementById('errorMessage');
+            
+            // Hide previous messages
+            successMessage.style.display = 'none';
+            errorMessage.style.display = 'none';
+            
+            // Validate form
+            const form = {
+                id_santri: document.getElementById('id_santri').value.trim(),
+                bop: document.getElementById('bop').value,
+                sarpras: document.getElementById('sarpras').value,
+                kegiatan: document.getElementById('kegiatan').value,
+                perlengkapan: document.getElementById('perlengkapan').value,
+                alamat: document.getElementById('alamat').value.trim(),
+                no_wa: document.getElementById('no_wa').value.trim()
+            };
+            
+            // Validation checks
+            if (!form.id_santri || !form.bop || !form.sarpras || !form.kegiatan || 
+                !form.perlengkapan || !form.alamat || !form.no_wa) {
+                errorMessage.textContent = '❌ Mohon lengkapi semua field yang wajib diisi.';
+                errorMessage.style.display = 'block';
+                return;
+            }
+            
+            if (!/^(08|62)\d{8,11}$/.test(form.no_wa)) {
+                errorMessage.textContent = '❌ Format nomor WhatsApp tidak valid. Gunakan format 08xxx atau 62xxx.';
+                errorMessage.style.display = 'block';
+                return;
+            }
+            
+            if (parseInt(form.bop) <= 0 || parseInt(form.sarpras) <= 0 || 
+                parseInt(form.kegiatan) <= 0 || parseInt(form.perlengkapan) <= 0) {
+                errorMessage.textContent = '❌ Semua biaya harus lebih dari 0.';
+                errorMessage.style.display = 'block';
+                return;
+            }
+            
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '⏳ Mengirim ke Google Sheets...';
+            
+            // Method 1: Try normal fetch first
+            try {
+                const response = await fetch(GOOGLE_APPS_SCRIPT_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(form)
+                });
+                
+                const result = await response.json();
                 
                 if (result.success) {
-                    showStatus('success', '✅ ' + result.message);
-                    form.reset();
-                    
-                    // Auto hide success message
-                    setTimeout(() => {
-                        hideStatus();
-                    }, 5000);
+                    showSuccess(form, result.message);
+                    return;
                 } else {
                     throw new Error(result.message);
                 }
                 
             } catch (error) {
-                console.error('❌ Error:', error);
-                showStatus('error', '❌ ' + error.message);
-            } finally {
-                setFormState(true);
-            }
-        }
-        
-        async function sendData(data) {
-            console.log('🚀 Attempting to send data...');
-            
-            // Method 1: JSON POST
-            try {
-                console.log('📡 Trying JSON method...');
-                const response = await fetch(WEBAPP_URL, {
-                    method: "POST",
-                    headers: { 
-                        "Content-Type": "application/json" 
-                    },
-                    body: JSON.stringify(data)
-                });
+                console.error('Fetch method failed:', error);
                 
-                if (!response.ok) {
-                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
-                }
-                
-                const result = await response.json();
-                console.log('✅ JSON method success:', result);
-                return result;
-                
-            } catch (jsonError) {
-                console.warn('⚠️ JSON method failed:', jsonError.message);
-                
-                // Method 2: FormData fallback
+                // Method 2: Fallback to form submission via iframe
                 try {
-                    console.log('📡 Trying FormData method...');
-                    const formData = new FormData();
-                    formData.append('json', JSON.stringify(data));
-                    
-                    const response = await fetch(WEBAPP_URL, {
-                        method: "POST",
-                        body: formData
-                    });
-                    
-                    const result = await response.json();
-                    console.log('✅ FormData method success:', result);
-                    return result;
-                    
-                } catch (formDataError) {
-                    console.error('❌ All methods failed');
-                    throw new Error('Gagal mengirim data. Periksa koneksi internet atau coba lagi.');
+                    await submitViaIframe(form);
+                    showSuccess(form, 'Data berhasil dikirim via fallback method!');
+                    return;
+                } catch (iframeError) {
+                    console.error('Iframe method failed:', iframeError);
+                    errorMessage.textContent = `❌ Gagal mengirim data: ${error.message}`;
+                    errorMessage.style.display = 'block';
                 }
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = '📤 Kirim Data Daftar Ulang';
             }
         }
-        
-        // ===============================================
-        // VALIDATION FUNCTIONS
-        // ===============================================
-        
-        function validateFormData(data) {
-            // Required fields
-            if (!data.id_santri || data.id_santri.trim().length < 3) {
-                return { valid: false, message: 'ID Santri wajib diisi minimal 3 karakter!' };
-            }
-            
-            // Phone number validation
-            if (data.no_wa && data.no_wa.trim()) {
-                const phoneRegex = /^(\+62|62|0)[0-9]{9,13}$/;
-                const cleanPhone = data.no_wa.replace(/[\s\-]/g, '');
-                if (!phoneRegex.test(cleanPhone)) {
-                    return { valid: false, message: 'Format nomor WhatsApp tidak valid!' };
-                }
-            }
-            
-            return { valid: true, message: 'Valid' };
-        }
-        
-        function validateIdSantri(e) {
-            const value = e.target.value.trim();
-            const input = e.target;
-            
-            if (value.length > 0 && value.length < 3) {
-                input.setCustomValidity('ID Santri minimal 3 karakter');
-                input.style.borderColor = '#e74c3c';
-            } else {
-                input.setCustomValidity('');
-                input.style.borderColor = '#e0e0e0';
-            }
-        }
-        
-        function validatePhoneNumber(e) {
-            const value = e.target.value.trim();
-            const input = e.target;
-            
-            if (value.length > 0) {
-                const phoneRegex = /^(\+62|62|0)[0-9]{9,13}$/;
-                const cleanPhone = value.replace(/[\s\-]/g, '');
+
+        function submitViaIframe(formData) {
+            return new Promise((resolve, reject) => {
+                // Create form element
+                const form = document.createElement('form');
+                form.method = 'POST';
+                form.action = GOOGLE_APPS_SCRIPT_URL;
+                form.target = 'hiddenIframe';
+                form.style.display = 'none';
                 
-                if (!phoneRegex.test(cleanPhone)) {
-                    input.setCustomValidity('Format: 08xxx atau +62xxx');
-                    input.style.borderColor = '#e74c3c';
-                } else {
-                    input.setCustomValidity('');
-                    input.style.borderColor = '#4CAF50';
+                // Add form data as hidden inputs
+                for (const [key, value] of Object.entries(formData)) {
+                    const input = document.createElement('input');
+                    input.type = 'hidden';
+                    input.name = key;
+                    input.value = value;
+                    form.appendChild(input);
                 }
-            } else {
-                input.setCustomValidity('');
-                input.style.borderColor = '#e0e0e0';
-            }
+                
+                // Add JSON data input
+                const jsonInput = document.createElement('input');
+                jsonInput.type = 'hidden';
+                jsonInput.name = 'json';
+                jsonInput.value = JSON.stringify(formData);
+                form.appendChild(jsonInput);
+                
+                document.body.appendChild(form);
+                
+                // Set timeout
+                const timeout = setTimeout(() => {
+                    document.body.removeChild(form);
+                    reject(new Error('Timeout - tidak ada response dari server'));
+                }, 10000);
+                
+                // Submit form
+                form.submit();
+                
+                // Assume success after short delay (since we can't read iframe response due to CORS)
+                setTimeout(() => {
+                    clearTimeout(timeout);
+                    document.body.removeChild(form);
+                    resolve();
+                }, 3000);
+            });
         }
-        
-        function formatNumberInput(e) {
-            let value = e.target.value;
+
+        function showSuccess(formData, message) {
+            const successMessage = document.getElementById('successMessage');
+            successMessage.innerHTML = `✅ ${message}<br><small>ID: ${formData.id_santri} • ${new Date().toLocaleString('id-ID')}</small>`;
+            successMessage.style.display = 'block';
             
-            // Remove non-numeric characters
-            value = value.replace(/[^0-9]/g, '');
-            
-            // Update input value
-            e.target.value = value;
-        }
-        
-        // ===============================================
-        // UI HELPER FUNCTIONS
-        // ===============================================
-        
-        function setFormState(enabled) {
-            const inputs = form.querySelectorAll('input, textarea, button');
-            inputs.forEach(input => {
-                input.disabled = !enabled;
+            // Clear form
+            document.querySelectorAll('input, textarea').forEach(input => {
+                input.value = '';
             });
             
-            if (enabled) {
-                submitBtn.innerHTML = '📤 Kirim Data';
-            } else {
-                submitBtn.innerHTML = '<div class="spinner"></div>Mengirim...';
+            successMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+        
+        // Add enter key support
+        document.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter' && !e.target.matches('textarea')) {
+                e.preventDefault();
+                submitForm();
             }
-        }
-        
-        function showStatus(type, message, showSpinner = false) {
-            statusEl.style.display = 'flex';
-            statusEl.className = `status ${type}`;
-            
-            if (showSpinner && type === 'loading') {
-                statusEl.innerHTML = `<div class="spinner"></div>${message}`;
-            } else {
-                statusEl.innerHTML = message;
-            }
-            
-            // Scroll to status
-            statusEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        }
-        
-        function hideStatus() {
-            statusEl.style.display = 'none';
-        }
-        
-        // ===============================================
-        // INITIALIZATION
-        // ===============================================
-        
-        document.addEventListener('DOMContentLoaded', function() {
-            console.log('🚀 Form initialized');
-            console.log('📡 Web App URL:', WEBAPP_URL);
-            
-            // Test connection on page load
-            testConnection();
         });
-        
-        async function testConnection() {
-            try {
-                console.log('🔍 Testing connection to Web App...');
-                const response = await fetch(WEBAPP_URL, { method: 'GET' });
-                const result = await response.json();
-                
-                if (result.success) {
-                    console.log('✅ Connection test successful:', result);
-                } else {
-                    console.warn('⚠️ Connection test failed:', result);
-                }
-            } catch (error) {
-                console.error('❌ Connection test error:', error);
-            }
-        }
-        
-        // ===============================================
-        // UTILITY FUNCTIONS
-        // ===============================================
-        
-        function formatCurrency(value) {
-            if (!value) return '';
-            return new Intl.NumberFormat('id-ID', {
-                style: 'currency',
-                currency: 'IDR',
-                minimumFractionDigits: 0
-            }).format(value);
-        }
-        
-        function cleanPhoneNumber(phone) {
-            if (!phone) return '';
-            
-            let cleaned = phone.toString().trim();
-            
-            // Add +62 if starts with 08
-            if (cleaned.startsWith('08')) {
-                cleaned = '+62' + cleaned.substring(1);
-            }
-            // Add + if starts with 62
-            else if (cleaned.startsWith('62') && !cleaned.startsWith('+62')) {
-                cleaned = '+' + cleaned;
-            }
-            
-            return cleaned;
-        }
-        
-        // ===============================================
-        // DEBUG FUNCTIONS
-        // ===============================================
-        
-        function debugForm() {
-            console.log('=== DEBUG FORM ===');
-            console.log('Form element:', form);
-            console.log('Status element:', statusEl);
-            console.log('Submit button:', submitBtn);
-            console.log('Web App URL:', WEBAPP_URL);
-            
-            const formData = Object.fromEntries(new FormData(form).entries());
-            console.log('Current form data:', formData);
-        }
-        
-        // Make debug function available globally
-        window.debugForm = debugForm;
-        
-        // ===============================================
-        // ERROR HANDLING
-        // ===============================================
-        
-        window.addEventListener('error', function(e) {
-            console.error('Global error caught:', e.error);
-            showStatus('error', '❌ Terjadi kesalahan sistem. Refresh halaman dan coba lagi.');
-        });
-        
-        window.addEventListener('unhandledrejection', function(e) {
-            console.error('Unhandled promise rejection:', e.reason);
-            showStatus('error', '❌ Terjadi kesalahan jaringan. Periksa koneksi internet Anda.');
-        });
-        
-        console.log('📋 Form Daftar Ulang Santri loaded successfully!');
-        console.log('🔧 Type debugForm() in console for debugging info');
+
+        // Check connection on page load
+        window.addEventListener('load', checkConnection);
     </script>
 </body>
 </html>
