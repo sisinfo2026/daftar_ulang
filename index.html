@@ -1,582 +1,69 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Form Daftar Ulang Santri</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            padding: 20px;
-        }
-
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            background: white;
-            border-radius: 15px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-            overflow: hidden;
-        }
-
-        .header {
-            background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
-            color: white;
-            padding: 30px;
-            text-align: center;
-        }
-
-        .header h1 {
-            font-size: 2rem;
-            margin-bottom: 10px;
-            font-weight: 600;
-        }
-
-        .header p {
-            opacity: 0.9;
-            font-size: 1.1rem;
-        }
-
-        .form-container {
-            padding: 40px;
-        }
-
-        .form-group {
-            margin-bottom: 25px;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 500;
-            color: #333;
-            font-size: 1rem;
-        }
-
-        .form-group input,
-        .form-group textarea {
-            width: 100%;
-            padding: 12px 15px;
-            border: 2px solid #e1e1e1;
-            border-radius: 8px;
-            font-size: 1rem;
-            transition: all 0.3s ease;
-            background: #f9f9f9;
-        }
-
-        .form-group input:focus,
-        .form-group textarea:focus {
-            outline: none;
-            border-color: #4CAF50;
-            background: white;
-            box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.1);
-        }
-
-        .form-group textarea {
-            resize: vertical;
-            min-height: 100px;
-        }
-
-        .form-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-        }
-
-        .submit-btn {
-            width: 100%;
-            padding: 15px;
-            background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-size: 1.1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            margin-top: 20px;
-        }
-
-        .submit-btn:hover:not(:disabled) {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(76, 175, 80, 0.3);
-        }
-
-        .submit-btn:active {
-            transform: translateY(0);
-        }
-
-        .submit-btn:disabled {
-            background: #ccc;
-            cursor: not-allowed;
-            transform: none;
-            box-shadow: none;
-        }
-
-        .success-message {
-            background: #d4edda;
-            color: #155724;
-            padding: 15px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            border: 1px solid #c3e6cb;
-            display: none;
-        }
-
-        .error-message {
-            background: #f8d7da;
-            color: #721c24;
-            padding: 15px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            border: 1px solid #f5c6cb;
-            display: none;
-        }
-
-        .required {
-            color: #e74c3c;
-        }
-
-        .info-box {
-            background: #e3f2fd;
-            border: 1px solid #bbdefb;
-            border-radius: 8px;
-            padding: 15px;
-            margin-bottom: 25px;
-        }
-
-        .info-box h3 {
-            color: #1976d2;
-            margin-bottom: 10px;
-        }
-
-        .info-box p {
-            color: #424242;
-            line-height: 1.5;
-        }
-
-        .status-indicator {
-            display: inline-block;
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            margin-right: 8px;
-            animation: pulse 2s infinite;
-        }
-
-        .status-online {
-            background: #4CAF50;
-            box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.3);
-        }
-
-        .status-offline {
-            background: #f44336;
-            box-shadow: 0 0 0 3px rgba(244, 67, 54, 0.3);
-        }
-
-        .status-checking {
-            background: #ff9800;
-            box-shadow: 0 0 0 3px rgba(255, 152, 0, 0.3);
-        }
-
-        @keyframes pulse {
-            0% { opacity: 1; }
-            50% { opacity: 0.5; }
-            100% { opacity: 1; }
-        }
-
-        .hidden-iframe {
-            display: none;
-        }
-
-        @media (max-width: 768px) {
-            .form-row {
-                grid-template-columns: 1fr;
-                gap: 0;
-            }
-            
-            .form-container {
-                padding: 20px;
-            }
-            
-            .header {
-                padding: 20px;
-            }
-            
-            .header h1 {
-                font-size: 1.5rem;
-            }
-        }
-    </style>
+  <meta charset="UTF-8">
+  <title>Form Daftar Ulang</title>
 </head>
 <body>
-    <div class="container">
-        <div class="header">
-            <h1>📋 Form Daftar Ulang Santri</h1>
-            <p>Silakan lengkapi data di bawah ini dengan benar</p>
-            <div style="margin-top: 15px; font-size: 0.9rem;">
-                <span class="status-indicator status-checking" id="connectionStatus"></span>
-                <span id="connectionText">Memeriksa koneksi...</span>
-            </div>
-        </div>
-        
-        <div class="form-container">
-            <div class="info-box">
-                <h3>⚠️ Informasi Penting</h3>
-                <p>Form ini terhubung langsung dengan Google Sheets. Data yang Anda masukkan akan tersimpan secara real-time di sistem.</p>
-            </div>
+  <h2>Form Daftar Ulang</h2>
+  <form id="myForm">
+    <label>ID Santri: <input type="text" name="id_santri" required></label><br><br>
+    <label>BOP: <input type="number" name="bop"></label><br><br>
+    <label>Sarpras: <input type="number" name="sarpras"></label><br><br>
+    <label>Kegiatan: <input type="number" name="kegiatan"></label><br><br>
+    <label>Perlengkapan: <input type="number" name="perlengkapan"></label><br><br>
+    <label>Alamat: <input type="text" name="alamat"></label><br><br>
+    <label>No WA: <input type="text" name="no_wa"></label><br><br>
+    <button type="submit">Kirim</button>
+  </form>
 
-            <div class="success-message" id="successMessage">
-                ✅ Data berhasil disimpan ke Google Sheets! Terima kasih telah melakukan daftar ulang.
-            </div>
-            
-            <div class="error-message" id="errorMessage">
-                ❌ Terjadi kesalahan saat menyimpan data.
-            </div>
+  <p id="status"></p>
 
-            <div class="form-group">
-                <label for="id_santri">ID Santri <span class="required">*</span></label>
-                <input type="text" id="id_santri" name="id_santri" required placeholder="Masukkan ID Santri" style="text-transform: uppercase;">
-            </div>
+  <iframe id="hidden_iframe" name="hidden_iframe" style="display:none;"></iframe>
 
-            <div class="form-row">
-                <div class="form-group">
-                    <label for="bop">Biaya Operasional (BOP) <span class="required">*</span></label>
-                    <input type="number" id="bop" name="bop" required placeholder="Masukkan jumlah BOP" min="0">
-                </div>
-                
-                <div class="form-group">
-                    <label for="sarpras">Sarana Prasarana <span class="required">*</span></label>
-                    <input type="number" id="sarpras" name="sarpras" required placeholder="Masukkan biaya Sarpras" min="0">
-                </div>
-            </div>
+  <script>
+    const WEBAPP_URL = "https://script.google.com/macros/s/AKfycbzNzE66l5HLoMVQ119g0M4AxXFEtZy_GnWehxhY_Q1ml0POZKxyl6JXFC17Gguz42-iYw/exec"; // ganti URL Web App
 
-            <div class="form-row">
-                <div class="form-group">
-                    <label for="kegiatan">Kegiatan <span class="required">*</span></label>
-                    <input type="number" id="kegiatan" name="kegiatan" required placeholder="Masukkan biaya kegiatan" min="0">
-                </div>
-                
-                <div class="form-group">
-                    <label for="perlengkapan">Perlengkapan <span class="required">*</span></label>
-                    <input type="number" id="perlengkapan" name="perlengkapan" required placeholder="Masukkan biaya perlengkapan" min="0">
-                </div>
-            </div>
+    const form = document.getElementById("myForm");
+    const statusEl = document.getElementById("status");
 
-            <div class="form-group">
-                <label for="alamat">Alamat <span class="required">*</span></label>
-                <textarea id="alamat" name="alamat" required placeholder="Masukkan alamat lengkap"></textarea>
-            </div>
+    form.addEventListener("submit", async function(e) {
+      e.preventDefault();
+      statusEl.textContent = "Mengirim...";
 
-            <div class="form-group">
-                <label for="no_wa">Nomor WhatsApp <span class="required">*</span></label>
-                <input type="tel" id="no_wa" name="no_wa" required placeholder="Contoh: 08123456789" pattern="[0-9]{10,13}">
-            </div>
+      const data = Object.fromEntries(new FormData(form).entries());
 
-            <button type="button" class="submit-btn" onclick="submitForm()" id="submitButton">
-                📤 Kirim Data Daftar Ulang
-            </button>
-        </div>
-    </div>
-
-    <!-- Hidden iframe untuk bypass CORS -->
-    <iframe id="hiddenIframe" class="hidden-iframe" name="hiddenIframe"></iframe>
-
-    <script>
-        // URL Google Apps Script Anda
-        const GOOGLE_APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzNzE66l5HLoMVQ119g0M4AxXFEtZy_GnWehxhY_Q1ml0POZKxyl6JXFC17Gguz42-iYw/exec';
-
-        // Method 1: Fetch dengan no-cors mode
-        async function checkConnectionFetch() {
-            try {
-                const response = await fetch(GOOGLE_APPS_SCRIPT_URL, {
-                    method: 'GET',
-                    mode: 'no-cors' // Bypass CORS untuk GET request
-                });
-                
-                // Dengan no-cors, kita tidak bisa membaca response, tapi jika tidak error berarti koneksi OK
-                return true;
-            } catch (error) {
-                console.error('Fetch method failed:', error);
-                return false;
-            }
-        }
-
-        // Method 2: JSONP (jika Apps Script support)
-        function checkConnectionJSONP() {
-            return new Promise((resolve) => {
-                const script = document.createElement('script');
-                const callbackName = 'jsonp_callback_' + Math.round(100000 * Math.random());
-                
-                // Cleanup function
-                const cleanup = () => {
-                    document.head.removeChild(script);
-                    delete window[callbackName];
-                };
-                
-                // Set timeout
-                const timeout = setTimeout(() => {
-                    cleanup();
-                    resolve(false);
-                }, 5000);
-                
-                // Success callback
-                window[callbackName] = function(data) {
-                    clearTimeout(timeout);
-                    cleanup();
-                    resolve(true);
-                };
-                
-                // Error callback
-                script.onerror = () => {
-                    clearTimeout(timeout);
-                    cleanup();
-                    resolve(false);
-                };
-                
-                script.src = GOOGLE_APPS_SCRIPT_URL + '?callback=' + callbackName;
-                document.head.appendChild(script);
-            });
-        }
-
-        // Method 3: Image ping
-        function checkConnectionImage() {
-            return new Promise((resolve) => {
-                const img = new Image();
-                const timeout = setTimeout(() => resolve(false), 5000);
-                
-                img.onload = () => {
-                    clearTimeout(timeout);
-                    resolve(true);
-                };
-                
-                img.onerror = () => {
-                    clearTimeout(timeout);
-                    resolve(false);
-                };
-                
-                img.src = GOOGLE_APPS_SCRIPT_URL + '?ping=' + Date.now();
-            });
-        }
-
-        // Check connection dengan multiple methods
-        async function checkConnection() {
-            const statusIndicator = document.getElementById('connectionStatus');
-            const statusText = document.getElementById('connectionText');
-            const submitButton = document.getElementById('submitButton');
-            
-            statusIndicator.className = 'status-indicator status-checking';
-            statusText.textContent = 'Memeriksa koneksi ke Google Sheets...';
-            
-            console.log('Testing connection to Apps Script...');
-            
-            // Try multiple methods
-            let connected = false;
-            
-            // Method 1: Fetch dengan no-cors
-            connected = await checkConnectionFetch();
-            
-            if (connected) {
-                statusIndicator.className = 'status-indicator status-online';
-                statusText.textContent = 'Siap mengirim ke Google Sheets ✓';
-                submitButton.disabled = false;
-                return true;
-            }
-            
-            // Method 2: Image ping (fallback)
-            connected = await checkConnectionImage();
-            
-            if (connected) {
-                statusIndicator.className = 'status-indicator status-online';
-                statusText.textContent = 'Koneksi terdeteksi (fallback) ✓';
-                submitButton.disabled = false;
-                return true;
-            }
-            
-            // All methods failed
-            statusIndicator.className = 'status-indicator status-offline';
-            statusText.textContent = 'Koneksi bermasalah - Coba submit manual';
-            submitButton.disabled = false; // Tetap allow submit
-            return false;
-        }
-
-        function validateWhatsApp(input) {
-            let value = input.value.replace(/[^\d]/g, '');
-            if (value.length > 0 && !value.startsWith('08') && !value.startsWith('62')) {
-                if (!value.startsWith('8')) {
-                    value = '08' + value;
-                }
-            }
-            input.value = value;
-        }
-
-        document.getElementById('no_wa').addEventListener('input', function() {
-            validateWhatsApp(this);
+      try {
+        const res = await fetch(WEBAPP_URL, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(data)
         });
 
-        document.getElementById('id_santri').addEventListener('input', function() {
-            this.value = this.value.toUpperCase();
-        });
+        if (!res.ok) throw new Error("Fetch gagal");
+        const out = await res.json();
+        statusEl.textContent = out.message;
+      } catch (err) {
+        // fallback ke iframe
+        statusEl.textContent = "Fetch gagal, coba metode alternatif...";
+        const iframeForm = document.createElement("form");
+        iframeForm.action = WEBAPP_URL;
+        iframeForm.method = "POST";
+        iframeForm.target = "hidden_iframe";
 
-        // Submit form dengan multiple methods
-        async function submitForm() {
-            const submitBtn = document.getElementById('submitButton');
-            const successMessage = document.getElementById('successMessage');
-            const errorMessage = document.getElementById('errorMessage');
-            
-            // Hide previous messages
-            successMessage.style.display = 'none';
-            errorMessage.style.display = 'none';
-            
-            // Validate form
-            const form = {
-                id_santri: document.getElementById('id_santri').value.trim(),
-                bop: document.getElementById('bop').value,
-                sarpras: document.getElementById('sarpras').value,
-                kegiatan: document.getElementById('kegiatan').value,
-                perlengkapan: document.getElementById('perlengkapan').value,
-                alamat: document.getElementById('alamat').value.trim(),
-                no_wa: document.getElementById('no_wa').value.trim()
-            };
-            
-            // Validation checks
-            if (!form.id_santri || !form.bop || !form.sarpras || !form.kegiatan || 
-                !form.perlengkapan || !form.alamat || !form.no_wa) {
-                errorMessage.textContent = '❌ Mohon lengkapi semua field yang wajib diisi.';
-                errorMessage.style.display = 'block';
-                return;
-            }
-            
-            if (!/^(08|62)\d{8,11}$/.test(form.no_wa)) {
-                errorMessage.textContent = '❌ Format nomor WhatsApp tidak valid. Gunakan format 08xxx atau 62xxx.';
-                errorMessage.style.display = 'block';
-                return;
-            }
-            
-            if (parseInt(form.bop) <= 0 || parseInt(form.sarpras) <= 0 || 
-                parseInt(form.kegiatan) <= 0 || parseInt(form.perlengkapan) <= 0) {
-                errorMessage.textContent = '❌ Semua biaya harus lebih dari 0.';
-                errorMessage.style.display = 'block';
-                return;
-            }
-            
-            submitBtn.disabled = true;
-            submitBtn.innerHTML = '⏳ Mengirim ke Google Sheets...';
-            
-            // Method 1: Try normal fetch first
-            try {
-                const response = await fetch(GOOGLE_APPS_SCRIPT_URL, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(form)
-                });
-                
-                const result = await response.json();
-                
-                if (result.success) {
-                    showSuccess(form, result.message);
-                    return;
-                } else {
-                    throw new Error(result.message);
-                }
-                
-            } catch (error) {
-                console.error('Fetch method failed:', error);
-                
-                // Method 2: Fallback to form submission via iframe
-                try {
-                    await submitViaIframe(form);
-                    showSuccess(form, 'Data berhasil dikirim via fallback method!');
-                    return;
-                } catch (iframeError) {
-                    console.error('Iframe method failed:', iframeError);
-                    errorMessage.textContent = `❌ Gagal mengirim data: ${error.message}`;
-                    errorMessage.style.display = 'block';
-                }
-            } finally {
-                submitBtn.disabled = false;
-                submitBtn.innerHTML = '📤 Kirim Data Daftar Ulang';
-            }
-        }
+        const hiddenInput = document.createElement("input");
+        hiddenInput.type = "hidden";
+        hiddenInput.name = "json";
+        hiddenInput.value = JSON.stringify(data);
 
-        function submitViaIframe(formData) {
-            return new Promise((resolve, reject) => {
-                // Create form element
-                const form = document.createElement('form');
-                form.method = 'POST';
-                form.action = GOOGLE_APPS_SCRIPT_URL;
-                form.target = 'hiddenIframe';
-                form.style.display = 'none';
-                
-                // Add form data as hidden inputs
-                for (const [key, value] of Object.entries(formData)) {
-                    const input = document.createElement('input');
-                    input.type = 'hidden';
-                    input.name = key;
-                    input.value = value;
-                    form.appendChild(input);
-                }
-                
-                // Add JSON data input
-                const jsonInput = document.createElement('input');
-                jsonInput.type = 'hidden';
-                jsonInput.name = 'json';
-                jsonInput.value = JSON.stringify(formData);
-                form.appendChild(jsonInput);
-                
-                document.body.appendChild(form);
-                
-                // Set timeout
-                const timeout = setTimeout(() => {
-                    document.body.removeChild(form);
-                    reject(new Error('Timeout - tidak ada response dari server'));
-                }, 10000);
-                
-                // Submit form
-                form.submit();
-                
-                // Assume success after short delay (since we can't read iframe response due to CORS)
-                setTimeout(() => {
-                    clearTimeout(timeout);
-                    document.body.removeChild(form);
-                    resolve();
-                }, 3000);
-            });
-        }
+        iframeForm.appendChild(hiddenInput);
+        document.body.appendChild(iframeForm);
+        iframeForm.submit();
+        iframeForm.remove();
 
-        function showSuccess(formData, message) {
-            const successMessage = document.getElementById('successMessage');
-            successMessage.innerHTML = `✅ ${message}<br><small>ID: ${formData.id_santri} • ${new Date().toLocaleString('id-ID')}</small>`;
-            successMessage.style.display = 'block';
-            
-            // Clear form
-            document.querySelectorAll('input, textarea').forEach(input => {
-                input.value = '';
-            });
-            
-            successMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        }
-        
-        // Add enter key support
-        document.addEventListener('keypress', function(e) {
-            if (e.key === 'Enter' && !e.target.matches('textarea')) {
-                e.preventDefault();
-                submitForm();
-            }
-        });
-
-        // Check connection on page load
-        window.addEventListener('load', checkConnection);
-    </script>
+        statusEl.textContent = "Data terkirim via fallback (iframe).";
+      }
+    });
+  </script>
 </body>
 </html>
